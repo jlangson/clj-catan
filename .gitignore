@@ -149,3 +149,8 @@ tags
 [._]*.un~
 
 # End of https://www.toptal.com/developers/gitignore/api/clojure,intellij,vim
+
+.clj-kondo/
+.hgignore
+.idea/
+clj-catan.iml
