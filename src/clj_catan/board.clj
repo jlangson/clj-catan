@@ -28,15 +28,10 @@
   [item-quantity locations output]
   (println (format "locations first ======> %s" (vector locations)))
 
-  (let [location (when (not-empty locations) (rand-nth locations))
+  (let [location (when (seq locations) (rand-nth locations))
         new-locations (remove #{location} locations)
-        item (rand-nth (keys item-quantity))
-        new-quantity (dec (item-quantity item))]
-    (println (format "location ======> %s" location))
-    (println (format "new-locations ======> %s" (vector new-locations)))
-    (println (format "item ======> %s" item))
-    (println (format "new-quantity ======> %s" new-quantity))
-    (println (format "output ======> %s" output))
+        item (when (seq item-quantity) (rand-nth (keys item-quantity)))
+        new-quantity (when (seq item-quantity) (dec (item-quantity item)))]
     (cond
       (empty? locations)
       output
