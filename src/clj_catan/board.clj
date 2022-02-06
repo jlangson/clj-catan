@@ -20,7 +20,7 @@
 (def harbors {"bricK"   1
               "generic" 4
               "sheep"   1
-              "stone"   1
+              "ore"   1
               "wheat"   1
               "wood"    1})
 
@@ -42,7 +42,7 @@
   )
 
 (defn setup-board []
-  {:harbors   (place harbors (range 1 10) {})
+  {:harbors   (place harbors (range 1 10) {})               ; sum of values of harbors is 9
    :rolls     (place rolls (range 1 19) {})
    :resources (place resources (range 1 20) {})}) ;higher range b/c desert
 
