@@ -1,37 +1,55 @@
 (ns clj-catan.board)
 
 (def resources {"forest" 4
-                "brick" 3
-                "wheat" 4
-                "sheep" 4
-                "ore" 3})
+                "brick"  3
+                "wheat"  4
+                "sheep"  4
+                "ore"    3})
 
-(def rolls {6 2
-            8 2
-            2 1
-            3 2
-            4 2
-            5 2
-            9 2
+(def rolls {6  2
+            8  2
+            2  1
+            3  2
+            4  2
+            5  2
+            9  2
             10 2
             11 2
             12 1})
 
-(def harbors {"bricK" 1
+(def harbors {"bricK"   1
               "generic" 4
-              "sheep" 1
-              "stone "1
-              "wheat" 1
-              "wood" 1})
-
-
+              "sheep"   1
+              "stone"   1
+              "wheat"   1
+              "wood"    1})
 
 (defn place
-  "Takes a kvs and a number of locations. Puts the kvs into those many locations, randomly"
-  ([map]
-  (place [map (range 1 19)]))                               ;19th slot is the desert
-  ([map locations]
-   ))
+  [item-quantity locations output]
+  (println (format "locations first ======> %s" (vector locations)))
+
+  (let [location (when (not-empty locations) (rand-nth locations))
+        new-locations (remove #{location} locations)
+        item (rand-nth (keys item-quantity))
+        new-quantity (dec (item-quantity item))]
+    (println (format "location ======> %s" location))
+    (println (format "new-locations ======> %s" (vector new-locations)))
+    (println (format "item ======> %s" item))
+    (println (format "new-quantity ======> %s" new-quantity))
+    (println (format "output ======> %s" output))
+    (cond
+      (empty? locations)
+      output
+      (= 0 new-quantity)
+      (place (dissoc item-quantity item) new-locations (assoc output location item))
+      :else
+      (place (assoc item-quantity item new-quantity) new-locations (assoc output location item))))
+  )
+
+(defn setup-board []
+  {:harbors   (place harbors (range 1 10) {})
+   :rolls     (place rolls (range 1 19) {})
+   :resources (place resources (range 1 20) {})}) ;higher range b/c desert
 
 (comment
   (for [kv rolls]
