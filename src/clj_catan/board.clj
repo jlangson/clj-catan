@@ -26,20 +26,16 @@
 
 (defn place
   [item-quantity locations output]
-  (println (format "locations first ======> %s" (vector locations)))
-
-  (let [location (when (seq locations) (rand-nth locations))
-        new-locations (remove #{location} locations)
-        item (when (seq item-quantity) (rand-nth (keys item-quantity)))
-        new-quantity (when (seq item-quantity) (dec (item-quantity item)))]
-    (cond
-      (empty? locations)
-      output
-      (= 0 new-quantity)
-      (place (dissoc item-quantity item) new-locations (assoc output location item))
-      :else
-      (place (assoc item-quantity item new-quantity) new-locations (assoc output location item))))
-  )
+  (if (empty? locations)
+    output
+    (let [location (rand-nth locations)
+          new-locations (remove #{location} locations)
+          item (rand-nth (keys item-quantity))
+          new-quantity (dec (item-quantity item))]
+      (if
+        (= 0 new-quantity)
+        (place (dissoc item-quantity item) new-locations (assoc output location item))
+        (place (assoc item-quantity item new-quantity) new-locations (assoc output location item))))))
 
 (defn setup-board []
   {:harbors   (place harbors (range 1 10) {})               ; sum of values of harbors is 9
