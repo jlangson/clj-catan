@@ -57,6 +57,13 @@
         (place (dissoc item-quantity item) new-locations (assoc output location item))
         (place (assoc item-quantity item new-quantity) new-locations (assoc output location item))))))
 
+(defn remove-neighbors-and-self
+  "Give a location and a map of neighbors, removes all the keys that are adjacent to that location"
+  [location neighbors]
+  (let [adjacents (neighbors location)]
+    (apply dissoc neighbors (conj adjacents location))))
+
+
 (def place-6-8
   "Seeds the board by placing the sixes and eights on non-adjacent tiles"
   [])
