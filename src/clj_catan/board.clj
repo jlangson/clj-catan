@@ -20,7 +20,7 @@
 (def harbors {"brick"   1
               "generic" 4
               "sheep"   1
-              "ore"   1
+              "ore"     1
               "wheat"   1
               "wood"    1})
 
