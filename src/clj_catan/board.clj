@@ -45,17 +45,25 @@
                 19 [7 8 18]})
 
 (defn place
+  ;todo improve comment
+  "Call this with a map, the neighbors keys or a range and a {}
+  item-quantity is
+  locations is
+  output is"
   [item-quantity locations output]
   (if (empty? locations)
     output
-    (let [location (rand-nth locations)
-          new-locations (remove #{location} locations)
-          item (rand-nth (keys item-quantity))
-          new-quantity (dec (item-quantity item))]
-      (if
-        (= 0 new-quantity)
-        (place (dissoc item-quantity item) new-locations (assoc output location item))
-        (place (assoc item-quantity item new-quantity) new-locations (assoc output location item))))))
+    (do (println (format "item-quantity ======> %s" item-quantity))
+        (let [location (rand-nth locations)
+              new-locations (remove #{location} locations)
+              item (rand-nth (keys item-quantity))
+              new-quantity (if (empty? item)
+                             0
+                             (dec (item-quantity item)))]
+          (if
+            (= 0 new-quantity)
+            (place (dissoc item-quantity item) new-locations (assoc output location item))
+            (place (assoc item-quantity item new-quantity) new-locations (assoc output location item)))))))
 
 (defn remove-neighbors-and-self
   "Give a location and a map of neighbors, removes all the keys that are adjacent to that location"
@@ -64,9 +72,25 @@
     (apply dissoc neighbors (conj adjacents location))))
 
 
-(def place-6-8
+(defn place-6-8
   "Seeds the board by placing the sixes and eights on non-adjacent tiles"
-  [])
+  ([]
+   (place-6-8 [6 6 8 8] neighbors (keys neighbors) {}))
+  ([six-eight neighbors locations output]
+   ;pick a random location
+   ;place it there
+   ;remove neighbors
+   ;return when six-eight is empty
+   (println (format "six-eight ======> %s" six-eight))
+   (println (format "neighbors ======> %s" neighbors))
+   (println (format "locations ======> %s" locations))
+   (println (format "output ======> %s" output))
+   (if (empty? six-eight)
+     output
+     (let [location (rand-nth locations)
+           new-locations (remove-neighbors-and-self location locations)]
+       (println "inside let")
+       (place-6-8 (pop six-eight) neighbors new-locations (conj output {location (peek six-eight)}))))))
 
 (defn setup-board []
   {:harbors   (place harbors (range 1 10) {})               ; sum of values of harbors is 9
@@ -76,3 +100,8 @@
 (comment
 
   )
+
+(defn arity
+  ([] "hello")
+  ([name] "hello jim")
+  ([name name2] "hello nancy"))
