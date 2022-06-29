@@ -51,19 +51,27 @@
   locations is
   output is"
   [item-quantity locations output]
+  ;(println (format "item-quantity ======> %s" item-quantity))
+  ;(println (format "locations ======> %s" locations))
+  ;(println (format "output ======> %s" output))
+  (println 1)
   (if (empty? locations)
-    output
-    (do (println (format "item-quantity ======> %s" item-quantity))
+    (do (println 2)
+        output)
+    (do (println 3)
         (let [location (rand-nth locations)
+              _ (println 4)
               new-locations (remove #{location} locations)
+              _ (println 5)
               item (rand-nth (keys item-quantity))
-              new-quantity (if (empty? item)
-                             0
-                             (dec (item-quantity item)))]
+              _ (println 6)
+              new-quantity (do (println (format "item ======> %s" item)) (if (nil? item)
+                                 (do (println 7) 0)
+                                 (dec (item-quantity item))))] ;ok
           (if
             (= 0 new-quantity)
-            (place (dissoc item-quantity item) new-locations (assoc output location item))
-            (place (assoc item-quantity item new-quantity) new-locations (assoc output location item)))))))
+            (do (println 9) (place (dissoc item-quantity item) new-locations (assoc output location item)))
+            (do (println 10) (place (assoc item-quantity item new-quantity) new-locations (assoc output location item)))))))) ;todo this is the line
 
 (defn remove-neighbors-and-self
   "Give a location and a map of neighbors, removes all the keys that are adjacent to that location"
@@ -94,12 +102,8 @@
 
 (defn setup-board []
   {:harbors   (place harbors (range 1 10) {})               ; sum of values of harbors is 9
-   :rolls     (place rolls (range 1 19) {})
-   :resources (place resources (range 1 20) {})}) ;higher range b/c desert
-
-(comment
-
-  )
+   :rolls     (place rolls (range 1 19) {})                 ;todo I think the bug has something to do with the values being numbers.
+   :resources (place resources (range 1 20) {})}) ;higher range b/c desert ;TODO change nil to desert
 
 (defn arity
   ([] "hello")
