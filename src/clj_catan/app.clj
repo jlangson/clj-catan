@@ -4,13 +4,14 @@
             [compojure.core :refer [defroutes GET POST]]
             [compojure.route :refer [not-found]]
             [clojure.data.json :as json]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [clj-catan.board :as board]))
 
 
 (def make-board
-  {:status 200
+  {:status  200
    :headers {"Content-Type" "text/html"}
-   :body "make the board"})
+   :body    (str (board/setup-board))})                     ;todo this is static. does not generate a new board when called twice
 
 (def home-page
   {:status  200
