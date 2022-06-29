@@ -46,6 +46,7 @@
 
 (defn place
   ;todo improve comment
+
   "Call this with a map, the neighbors keys or a range and a {}
   item-quantity is
   locations is
@@ -101,7 +102,9 @@
        (place-6-8 (pop six-eight) neighbors new-locations (conj output {location (peek six-eight)}))))))
 
 (defn setup-board []
+  ;todo replace magic numbers in range with (range 1 (reduce + 1 (vals harbors/rolls/resources)))
   {:harbors   (place harbors (range 1 10) {})               ; sum of values of harbors is 9
+   ;todo make sure rolls use place-6-8
    :rolls     (place rolls (range 1 19) {})                 ;todo I think the bug has something to do with the values being numbers.
    :resources (place resources (range 1 20) {})}) ;higher range b/c desert ;TODO change nil to desert
 
