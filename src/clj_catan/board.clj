@@ -6,6 +6,8 @@
                 "sheep"  4
                 "ore"    3})
 
+; the keys in the hashmap are the type
+; the values in the hashmap are the quantity
 (def rolls {6  2
             8  2
             2  1
