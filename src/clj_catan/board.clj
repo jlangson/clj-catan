@@ -19,6 +19,8 @@
             11 2
             12 1})
 
+; the keys in the hashmap are the type
+; the values in the hashmap are the quantity
 (def harbors {"brick"   1
               "generic" 4
               "sheep"   1
@@ -26,6 +28,8 @@
               "wheat"   1
               "wood"    1})
 
+; the keys in the hashmap is the location
+; the values in the hashmap are the adjacent tiles
 (def neighbors {1 [2 3 4 5 6 7]
                 2 [1 3 7 8 9 10]
                 3 [1 2 4 10 11 12]
