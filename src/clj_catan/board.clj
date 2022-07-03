@@ -1,5 +1,7 @@
 (ns clj-catan.board)
 
+; the keys in the hashmap are the type
+; the values in the hashmap are the quantity
 (def resources {"forest" 4
                 "brick"  3
                 "wheat"  4
