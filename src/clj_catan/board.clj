@@ -8,14 +8,15 @@
                 "sheep"  4
                 "ore"    3})
 
-; the keys in the hashmap are the type
-; the values in the hashmap are the quantity
-(def rolls {6  2
-            8  2
-            2  1
+; the keys in the hashmap are the dice rolls that go on tiles.
+; there is no 7 b/c 7 is not placed on any tiles
+; the values in the hashmap are the quantity of each dice roll that goes on the board
+(def rolls {2  1
             3  2
             4  2
             5  2
+            6  2
+            8  2
             9  2
             10 2
             11 2
@@ -31,7 +32,7 @@
               "wood"    1})
 
 ; the keys in the hashmap is the location
-; the values in the hashmap are the adjacent tiles
+; the value in the hashmap are the adjacent tiles
 (def neighbors {1 [2 3 4 5 6 7]
                 2 [1 3 7 8 9 10]
                 3 [1 2 4 10 11 12]
