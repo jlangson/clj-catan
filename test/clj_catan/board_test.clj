@@ -12,10 +12,32 @@
   ;vector -> hashmap
   (apply assoc {} (flatten (gen/sample (gen/vector gen/nat 2 2))))
 
+  (map reverse (into [] (:harbors (b/setup-board))))
+  (as-> (b/setup-board) b
+    (:harbors b)
+    (into [] b)
+    (map reverse b))
+
+  (->> (b/setup-board)
+    (:harbors)
+    (into [])
+    (map reverse))
   )
 
-; todo try generating a vector and converting to a hashmap?
-(def gen-map (gen/hash-map "place" gen/nat))
+(defn count-reversed-keys
+  ;todo wrong description. look at the hashmaps and think more clearly.
+  ; it is about the count, not the sum
+  "Takes a map, reverses kv and changes values to the count of the former keys
+  ex: {1 :a
+       2 :a
+       3 :b
+       2 :b
+       18 :c}
+       ->
+       {:a 2
+       :b 2
+       :c 1"
+  [hash-map])
 
 (defspec place-inverse-test 100
   (prop/for-all [board-vector (gen/vector (gen/vector gen/nat 2 2))]
