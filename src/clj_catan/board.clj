@@ -55,33 +55,23 @@
 
 (defn place
   ;todo improve comment
-
   "Call this with a map, the neighbors keys or a range and a {}
   item-quantity is
   locations is
   output is"
   [item-quantity locations output]
-  ;(println (format "item-quantity ======> %s" item-quantity))
-  ;(println (format "locations ======> %s" locations))
-  ;(println (format "output ======> %s" output))
-  (println 1)
   (if (empty? locations)
-    (do (println 2)
-        output)
-    (do (println 3)
-        (let [location (rand-nth locations)
-              _ (println 4)
-              new-locations (remove #{location} locations)
-              _ (println 5)
-              item (rand-nth (keys item-quantity))
-              _ (println 6)
-              new-quantity (do (println (format "item ======> %s" item)) (if (nil? item)
-                                 (do (println 7) 0)
-                                 (dec (item-quantity item))))] ;ok
-          (if
-            (= 0 new-quantity)
-            (do (println 9) (place (dissoc item-quantity item) new-locations (assoc output location item)))
-            (do (println 10) (place (assoc item-quantity item new-quantity) new-locations (assoc output location item)))))))) ;todo this is the line
+    output
+    (let [location (rand-nth locations)
+          new-locations (remove #{location} locations)
+          item (rand-nth (keys item-quantity))
+          new-quantity (if (nil? item)
+                         0
+                         (dec (item-quantity item)))]
+      (if
+        (= 0 new-quantity)
+        (place (dissoc item-quantity item) new-locations (assoc output location item))
+        (place (assoc item-quantity item new-quantity) new-locations (assoc output location item))))))
 
 (defn remove-neighbors-and-self
   "Give a location and a map of neighbors, removes all the keys that are adjacent to that location"
