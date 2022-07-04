@@ -5,15 +5,12 @@
             [clojure.test.check.properties :as prop]
             [clojure.test.check.generators :as gen]))
 
-;todo write inverse test for (place)
-
-(defn place-inverse [map]
-  )
-
-;todo generate a hashmap with numerical values. keys can be strings or ints
 (comment
-  ;todo generate keys as a range of ints. try making a vector and converting to hashmap
-  (gen/sample (gen/hash-map gen/nat gen/boolean :b gen/nat))
+  ;generate the vector
+  (gen/sample (gen/vector (gen/vector gen/nat 2 2)))
+  (gen/sample (gen/vector gen/nat 2 2))
+  ;vector -> hashmap
+  (apply assoc {} (flatten (gen/sample (gen/vector gen/nat 2 2))))
 
   )
 
@@ -21,7 +18,9 @@
 (def gen-map (gen/hash-map "place" gen/nat))
 
 (defspec place-inverse-test 100
-  (prop/for-all [board-map gen-map]
-   (let [board (b/place board-map (range 1 (reduce + 1 (vals board-map))) {})]
-     (= false true))))
+  (prop/for-all [board-vector (gen/vector (gen/vector gen/nat 2 2))]
+
+   (let [board-map (apply assoc {} (flatten board-vector))
+         board (b/place board-map (b/count-locations board-map) {})]
+     (= board-map false))))
 
