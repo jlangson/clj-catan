@@ -16,20 +16,21 @@
        {:a 2
        :b 2
        :c 1}"
-  [hash-map]
-  (->> hash-map
+  [m]
+  (->> m
     (into [])
     (map second)
-    (frequencies)))
+    frequencies))
 
 (defspec place-inverse-test 100
-  (prop/for-all [board-vector (gen/vector (gen/vector gen/nat 2 2))]
+  (prop/for-all [board-v (gen/not-empty (gen/vector (gen/vector gen/nat 2 2)))]
+    (let [board-m (apply assoc {} (flatten board-v))
+          board (b/place board-m (b/count-locations board-m) {})]
+      (= true))))
 
-   (let [board-map (apply assoc {} (flatten board-vector))
-         board (b/place board-map (b/count-locations board-map) {})]
-     (= board-map false))))
 
 (comment
+  (apply assoc {} flatten [[6 6] [9 7] [7 7] [9 0] [4 1] [5 1] [2 3]])
   ;generate the vector
   (gen/sample (gen/vector (gen/vector gen/nat 2 2)))
   (gen/sample (gen/vector gen/nat 2 2))
