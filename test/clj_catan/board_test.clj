@@ -22,12 +22,12 @@
     (map second)
     frequencies))
 
-(defspec place-inverse-test 100
-  (prop/for-all [board-v (gen/not-empty (gen/vector (gen/vector gen/nat 2 2)))]
+; 75 tests run in 1684 ms. 90 tests on at 4436 ms. 100 tests runs for 10 minutes?
+(defspec place-inverse-test 75
+  (prop/for-all [board-v (gen/not-empty (gen/vector (gen/vector (gen/fmap inc gen/nat) 2 2)))]
     (let [board-m (apply assoc {} (flatten board-v))
           board (b/place board-m (b/count-locations board-m) {})]
-      (= true))))
-
+      (= board-m (count-reversed-keys board)))))
 
 (comment
   (apply assoc {} flatten [[6 6] [9 7] [7 7] [9 0] [4 1] [5 1] [2 3]])
