@@ -22,7 +22,7 @@
     (map second)
     frequencies))
 
-; 75 tests run in 1684 ms. 90 tests on at 4436 ms. 100 tests runs for 10 minutes?
+; 100 runs causes stack overflow
 (defspec place-inverse-test 75
   (prop/for-all [board-v (gen/not-empty (gen/vector (gen/vector (gen/fmap inc gen/nat) 2 2)))]
     (let [board-m (apply assoc {} (flatten board-v))
