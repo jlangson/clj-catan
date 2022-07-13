@@ -83,22 +83,33 @@
 (defn place-6-8
   "Seeds the board by placing the sixes and eights on non-adjacent tiles"
   ([]
-   (place-6-8 [6 6 8 8] neighbors (keys neighbors) {}))
-  ([six-eight neighbors locations output]
+   (place-6-8 [6 6 8 8] neighbors (keys neighbors) {}))     ;todo error has something to do with (keys neighbors)
+  ([six-eight-v neighbors adjacents output]
    ;pick a random location
    ;place it there
    ;remove neighbors
-   ;return when six-eight is empty
-   (println (format "six-eight ======> %s" six-eight))
+   ;return when six-eight-v is empty
+   (println (format "six-eight-v ======> %s" six-eight-v))
    (println (format "neighbors ======> %s" neighbors))
-   (println (format "locations ======> %s" locations))
+   (println (format "adjacents ======> %s" adjacents))
    (println (format "output ======> %s" output))
-   (if (empty? six-eight)
+   (if (empty? six-eight-v)
      output
-     (let [location (rand-nth locations)
-           new-locations (remove-neighbors-and-self location locations)]
+     (let [location (rand-nth adjacents)
+           _ (println (format "location ======> %s" location))
+           new-locations (remove-neighbors-and-self location adjacents)] ;todo or error has something to do with adjacents which is a seq
        (println "inside let")
-       (place-6-8 (pop six-eight) neighbors new-locations (conj output {location (peek six-eight)}))))))
+       (place-6-8 (pop six-eight-v) neighbors new-locations (conj output {location (peek six-eight-v)}))))))
+
+;(defn place-6-8-two
+;  ([]
+;   (place-6-8-two [6 6 8 8] neighbors (keys neighbors) {}))
+;  ([six-eight-v neighbors locations output]
+;   (if (empty? six-eight)
+;     output
+;     (let [location (rand-nth locations)
+;           new-locations (remove-neighbors-and-self location locations)]
+;       (place-6-8-two (rest six-eight-v) neighbors new-locations)))))
 
 (defn count-locations [locations]
   (range 1 (reduce + 1 (vals locations))))
@@ -109,8 +120,3 @@
    ;todo make sure rolls use place-6-8
    :rolls     (place rolls (count-locations rolls) {})                 ;todo I think the bug has something to do with the values being numbers.
    :resources (place resources (count-locations resources) {})}) ;higher range b/c desert ;TODO change nil to desert
-
-(defn arity
-  ([] "hello")
-  ([name] "hello jim")
-  ([name name2] "hello nancy"))
