@@ -3,7 +3,10 @@
             [clj-catan.board :as b]
             [clojure.test.check.clojure-test :refer [defspec]]
             [clojure.test.check.properties :as prop]
-            [clojure.test.check.generators :as gen]))
+            [clojure.test.check.generators :as gen]
+            [taoensso.tufte :as tufte :refer (defnp p profiled profile)]))
+
+(tufte/add-basic-println-handler! {})
 
 (defn count-reversed-keys
   "Takes a map, reverses kv and changes values to the frequencies of the former keys
@@ -17,10 +20,11 @@
        :b 2
        :c 1}"
   [m]
-  (->> m
-    (into [])
-    (map second)
-    frequencies))
+  (profile
+    {} (p ::count-reversed-keys (->> m
+                                  (into [])
+                                  (map second)
+                                  frequencies))))
 
 (defspec place-inverse-test 100
   (prop/for-all [board-v (gen/not-empty (gen/vector (gen/vector gen/nat 2 2)))]

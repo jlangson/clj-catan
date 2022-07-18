@@ -11,6 +11,7 @@
 ; the keys in the hashmap are the dice rolls that go on tiles.
 ; there is no 7 b/c 7 is not placed on any tiles
 ; the values in the hashmap are the quantity of each dice roll that goes on the board
+; todo add 7 1 as the desert square?
 (def rolls {2  1
             3  2
             4  2

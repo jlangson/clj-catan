@@ -8,8 +8,10 @@
                  [ring "1.9.5"]
                  [org.clojure/data.json "2.4.0"]
                  [com.github.seancorfield/next.jdbc "1.2.780"]
-                 [org.postgresql/postgresql "42.3.6"]]
+                 [org.postgresql/postgresql "42.3.6"]
+                 [com.taoensso/tufte "2.2.0"]]
   :profiles {:dev {:dependencies [[org.clojure/test.check "1.1.1"]
                                   [ring/ring-mock "0.4.0"]
-                                  [clj-test-containers "0.7.1"]]}}
+                                  [clj-test-containers "0.7.1"]
+                                  ]}}
   :repl-options {:init-ns clj-catan.core})
