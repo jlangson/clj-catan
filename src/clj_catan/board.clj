@@ -80,7 +80,6 @@
   (let [adjacents (neighbors location)]
     (apply dissoc neighbors (conj adjacents location))))
 
-
 (defn place-6-8
   "Seeds the board by placing the sixes and eights on non-adjacent tiles"
   ([]
@@ -95,10 +94,12 @@
    (println (format "locations ======> %s" locations))
    (println (format "output ======> %s" output))
    (if (empty? six-eight)
-     output
+     (do (println 1) output)
      (let [location (rand-nth locations)
-           new-locations (remove-neighbors-and-self location locations)]
-       (println "inside let")
+           _ (println (format "location ======> %s" location))
+           new-locations (remove-neighbors-and-self location locations)
+           _ (println (format "new-locations ======> %s" new-locations))]
+       (println 2)
        (place-6-8 (pop six-eight) neighbors new-locations (conj output {location (peek six-eight)}))))))
 
 (defn count-locations [locations]
@@ -110,8 +111,3 @@
    ;todo make sure rolls use place-6-8
    :rolls     (place rolls (count-locations rolls) {})                 ;todo I think the bug has something to do with the values being numbers.
    :resources (place resources (count-locations resources) {})}) ;higher range b/c desert ;TODO change nil to desert
-
-(defn arity
-  ([] "hello")
-  ([name] "hello jim")
-  ([name name2] "hello nancy"))

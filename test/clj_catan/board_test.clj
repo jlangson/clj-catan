@@ -35,15 +35,25 @@
           board (b/place board-m (b/count-locations board-m) {})]
       (= true))))
 
-;generate hashmap
-;call function
-;see if key is gone
+;todo write generator
+;randomly select a key
+;remove key
+;see if maps are equal
 (defspec remove-neighbors-and-self-function-test 100
-  (prop/for-all [m ()]))
+  (prop/for-all [v (gen/not-empty (gen/vector (gen/vector gen/small-integer 2 100)))]
+    (let [m (v->hm v)
+          rand-k (rand-nth (keys m))]
+      (= (b/remove-neighbors-and-self m rand-k) (remove rand-k m)))))
 
 (comment
 
-  (gen/not-empty (gen/vector (gen/vector)))
+
+  (gen/sample
+    (gen/not-empty (gen/vector (gen/vector gen/int 2 100))))
+  (gen/sample
+    (gen/not-empty (gen/vector (gen/vector gen/keyword 2))))
+  (gen/sample
+    (gen/not-empty (gen/hash-map :a (gen/vector gen/nat))))
   (apply assoc {} flatten [[6 6] [9 7] [7 7] [9 0] [4 1] [5 1] [2 3]])
   ;generate the vector
   (gen/sample (gen/vector (gen/vector gen/nat 2 2)))
