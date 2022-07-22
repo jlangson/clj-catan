@@ -8,6 +8,9 @@
 
 (tufte/add-basic-println-handler! {})
 
+(defn v->hm [v]
+  (apply assoc {} (flatten v)))
+
 (defn count-reversed-keys
   "Takes a map, reverses kv and changes values to the frequencies of the former keys
   ex: {1 :a
@@ -26,14 +29,21 @@
                                   (map second)
                                   frequencies))))
 
-(defspec place-inverse-test 100
+(defspec place-inverse-test 75
   (prop/for-all [board-v (gen/not-empty (gen/vector (gen/vector gen/nat 2 2)))]
-    (let [board-m (apply assoc {} (flatten board-v))
+    (let [board-m (v->hm board-v)
           board (b/place board-m (b/count-locations board-m) {})]
       (= true))))
 
+;generate hashmap
+;call function
+;see if key is gone
+(defspec remove-neighbors-and-self-function-test 100
+  (prop/for-all [m ()]))
 
 (comment
+
+  (gen/not-empty (gen/vector (gen/vector)))
   (apply assoc {} flatten [[6 6] [9 7] [7 7] [9 0] [4 1] [5 1] [2 3]])
   ;generate the vector
   (gen/sample (gen/vector (gen/vector gen/nat 2 2)))
