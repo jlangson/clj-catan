@@ -29,6 +29,15 @@
           board (b/place board-m (b/count-locations board-m) {})]
       (= board-m (count-reversed-keys board)))))
 
+(deftest remove-neighbors-and-self
+  (let [neigbhors {1  [2 3 :a]
+                   2  [4 5 6]
+                   3  [7 8 9]
+                   :a [5 6 7]
+                   :b [12 13 11]}
+        expected {:b [12 13 11]}]
+    (is (= expected (b/remove-neighbors-and-self 1 neigbhors)))))
+
 (comment
   (apply assoc {} flatten [[6 6] [9 7] [7 7] [9 0] [4 1] [5 1] [2 3]])
   ;generate the vector
