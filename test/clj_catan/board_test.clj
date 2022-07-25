@@ -3,7 +3,8 @@
             [clj-catan.board :as b]
             [clojure.test.check.clojure-test :refer [defspec]]
             [clojure.test.check.properties :as prop]
-            [clojure.test.check.generators :as gen]))
+            [clojure.test.check.generators :as gen]
+            [clojure.set :as set]))
 
 (defn count-reversed-keys
   "Takes a map, reverses kv and changes values to the frequencies of the former keys
@@ -39,15 +40,36 @@
     (is (= expected (b/remove-neighbors-and-self 1 neigbhors)))))
 
 (defn adjacent?
-  "Determines if any of the locations are adjacent to each other"
-  [locations-seq neighbors-m]
+  "Determines if any of the locations are adjacent to each other
+  by comparing if any locations are in the values of the map
+  [1 2 3]
+  {1 [2 3 4]
+   2 [1 3 4]
+   3 [1 4 5]}
+   => true
 
-  )
-;make sure that none of the keys are adjacent to the neighbors
-(deftest place-6-8-not-adjacent-test
-  )
+   [1 19]
+   {1 [1 2 3]
+   19 [4 5 7]}
+   => false"
+  [locations-v neighbors-m]
+  (let [loc-set (set locations-v)
+        neighbors-set (set (flatten (map neighbors-m locations-v)))]
+    (seq (set/intersection loc-set neighbors-set))))
+
+; call b/place-6-8 100 times
+; make sure none of the tiles are adjacent
+(deftest place-6-8-test
+  (dotimes [i 100]
+    (is (not (adjacent? (keys (b/place-6-8)) b/neighbors)))))
 
 (comment
+  (for [loc [1 2 19]]
+    (println (b/neighbors loc))
+    (conj (b/neighbors loc))
+    )
+  (set (flatten (map b/neighbors [1 2 3])))
+  (map set (vals b/neighbors))
   (apply assoc {} flatten [[6 6] [9 7] [7 7] [9 0] [4 1] [5 1] [2 3]])
   ;generate the vector
   (gen/sample (gen/vector (gen/vector gen/nat 2 2)))
