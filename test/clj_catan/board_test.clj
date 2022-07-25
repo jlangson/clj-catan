@@ -38,6 +38,15 @@
         expected {:b [12 13 11]}]
     (is (= expected (b/remove-neighbors-and-self 1 neigbhors)))))
 
+(defn adjacent?
+  "Determines if any of the locations are adjacent to each other"
+  [locations-seq neighbors-m]
+
+  )
+;make sure that none of the keys are adjacent to the neighbors
+(deftest place-6-8-not-adjacent-test
+  )
+
 (comment
   (apply assoc {} flatten [[6 6] [9 7] [7 7] [9 0] [4 1] [5 1] [2 3]])
   ;generate the vector
