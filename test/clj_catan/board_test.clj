@@ -61,7 +61,10 @@
 ; make sure none of the tiles are adjacent
 (deftest place-6-8-test
   (dotimes [i 100]
-    (is (not (adjacent? (keys (b/place-6-8)) b/neighbors)))))
+    (let [p68 (b/place-6-8)]
+      (when (adjacent? (keys p68) b/neighbors)
+        (println (format "failed adjacent at - (keys p68) ======> %s" (keys p68))))
+      (is (not (adjacent? (keys p68) b/neighbors))))))
 
 (comment
   (for [loc [1 2 19]]

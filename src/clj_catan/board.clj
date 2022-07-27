@@ -33,6 +33,8 @@
 
 ; the keys in the hashmap is the location
 ; the value in the hashmap are the adjacent tiles
+;todo double check the graph.
+;todo make notes on how these squares were determined
 (def neighbors {1 [2 3 4 5 6 7]
                 2 [1 3 7 8 9 10]
                 3 [1 2 4 10 11 12]
@@ -40,7 +42,7 @@
                 5 [1 4 6 14 15 16]
                 6 [1 5 7 16 17 18]
                 7 [1 2 6 8 18 19]
-                8 [2 7 8 18]
+                8 [2 7 9 18]
                 9 [2 8 10]
                 10 [2 3 9 11]
                 11 [3 10 12]
@@ -83,23 +85,14 @@
 (defn place-6-8
   "Seeds the board by placing the sixes and eights on non-adjacent tiles"
   ([]
-   (place-6-8 [6 6 8 8] neighbors {}))
+   (place-6-8 [6 6 8 8] neighbors {}))  ;todo make this explicit that neighbors is referencing a global
   ([six-eight-v neighbors  output]
    (if (empty? six-eight-v)
      output
      (let [location (rand-nth (keys neighbors))
            new-locations (remove-neighbors-and-self location neighbors)]
-       (place-6-8 (pop six-eight-v) neighbors (conj output {location (peek six-eight-v)}))))))
+       (place-6-8 (pop six-eight-v) new-locations (conj output {location (peek six-eight-v)})))))) ;should neigbhors be new-locations?
 
-;(defn place-6-8-two
-;  ([]
-;   (place-6-8-two [6 6 8 8] neighbors (keys neighbors) {}))
-;  ([six-eight-v neighbors locations output]
-;   (if (empty? six-eight)
-;     output
-;     (let [location (rand-nth locations)
-;           new-locations (remove-neighbors-and-self location locations)]
-;       (place-6-8-two (rest six-eight-v) neighbors new-locations)))))
 
 (defn count-locations [locations]
   (range 1 (reduce + 1 (vals locations))))
