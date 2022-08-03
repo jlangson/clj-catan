@@ -97,13 +97,10 @@
 ;todo switch to sorted maps?
 (defn setup-board []
   (let [p6-8s (place-6-8)
-        _ (println (format "p6-8s ======> %s" p6-8s))
-        locations-without-6-8s (keys (apply dissoc neighbors (keys p6-8s)))
-        _ (println (format "locations-without-6-8s ======> %s" locations-without-6-8s))
-        _ (println "intersection= " (clojure.set/intersection (set (keys p6-8s)) (set locations-without-6-8s)))]
-    {:harbors   (place harbors (count-locations harbors) {})
-     :rolls     (merge p6-8s (place rolls locations-without-6-8s {}))
-     :resources (place resources (count-locations resources) {})})) ;higher range b/c desert ;TODO change nil to desert
+        locations-without-6-8s (keys (apply dissoc neighbors (keys p6-8s)))]
+    {:harbors   (into (sorted-map) (place harbors (count-locations harbors) {}))
+     :rolls     (into (sorted-map) (merge p6-8s (place rolls locations-without-6-8s {})))
+     :resources (into (sorted-map) (place resources (count-locations resources) {}))})) ;higher range b/c desert ;TODO change nil to desert
 
 (comment
   (require '[flow-storm.api :as fs-api])
