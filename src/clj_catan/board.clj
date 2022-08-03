@@ -11,6 +11,7 @@
 ; the keys in the hashmap are the dice rolls that go on tiles.
 ; there is no 7 b/c 7 is not placed on any tiles
 ; the values in the hashmap are the quantity of each dice roll that goes on the board
+; although 6 and 8 are valid rolls, they are special rolls that are handled by placew-6-8
 (def rolls {2  1
             3  2
             4  2
@@ -97,14 +98,17 @@
 (defn setup-board []
   (let [p6-8s (place-6-8)
         _ (println (format "p6-8s ======> %s" p6-8s))
-        locations-without-6-8s (keys (apply dissoc neighbors p6-8s))]
-    ;todo make it so the :rolls for p68s are not null values in the :rolls map
+        locations-without-6-8s (keys (apply dissoc neighbors (keys p6-8s)))
+        _ (println (format "locations-without-6-8s ======> %s" locations-without-6-8s))
+        _ (println "intersection= " (clojure.set/intersection (set (keys p6-8s)) (set locations-without-6-8s)))]
     {:harbors   (place harbors (count-locations harbors) {})
-     ;todo make sure rolls use place-6-8
      :rolls     (merge p6-8s (place rolls locations-without-6-8s {}))
      :resources (place resources (count-locations resources) {})})) ;higher range b/c desert ;TODO change nil to desert
 
 (comment
   (require '[flow-storm.api :as fs-api])
   (fs-api/local-connect)
+  (fs-api/stop)
+
+  (apply dissoc neighbors (keys {19 8, 7 8, 9 6, 1 6}))
   )
