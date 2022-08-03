@@ -15,8 +15,8 @@
             3  2
             4  2
             5  2
-            6  2
-            8  2
+            ;6  2
+            ;8  2
             9  2
             10 2
             11 2
@@ -53,7 +53,6 @@
                 17 [13 14 18]
                 18 [14 15 17 19]
                 19 [15 16 18]})
-
 (defn place
   ;todo improve comment
   "Call this with a map, the neighbors keys or a range and a {}
@@ -80,7 +79,6 @@
   (let [adjacents (neighbors location)]
     (apply dissoc neighbors (conj adjacents location))))
 
-
 (defn place-6-8
   "Seeds the board by placing the sixes and eights on non-adjacent tiles"
   ([]
@@ -92,13 +90,21 @@
            new-locations (remove-neighbors-and-self location neighbors)]
        (place-6-8 (pop six-eight-v) new-locations (conj output {location (peek six-eight-v)})))))) ;should neigbhors be new-locations?
 
-
 (defn count-locations [locations]
   (range 1 (reduce + 1 (vals locations))))
 
 ;todo switch to sorted maps?
 (defn setup-board []
-  {:harbors   (place harbors (count-locations harbors) {})               ; sum of values of harbors is 9
-   ;todo make sure rolls use place-6-8
-   :rolls     (place rolls (count-locations rolls) {})                 ;todo I think the bug has something to do with the values being numbers.
-   :resources (place resources (count-locations resources) {})}) ;higher range b/c desert ;TODO change nil to desert
+  (let [p6-8s (place-6-8)
+        _ (println (format "p6-8s ======> %s" p6-8s))
+        locations-without-6-8s (keys (apply dissoc neighbors p6-8s))]
+    ;todo make it so the :rolls for p68s are not null values in the :rolls map
+    {:harbors   (place harbors (count-locations harbors) {})
+     ;todo make sure rolls use place-6-8
+     :rolls     (merge p6-8s (place rolls locations-without-6-8s {}))
+     :resources (place resources (count-locations resources) {})})) ;higher range b/c desert ;TODO change nil to desert
+
+(comment
+  (require '[flow-storm.api :as fs-api])
+  (fs-api/local-connect)
+  )
