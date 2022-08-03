@@ -34,7 +34,7 @@
 
 ; the keys in the hashmap is the location
 ; the value in the hashmap are the adjacent tiles
-;todo make notes on how these squares were determined
+; see "catan overview.odg" for a picture of the tiles
 (def neighbors {1 [2 4 5]
                 2 [1 3 5 6 ]
                 3 [2 6 7]
@@ -55,24 +55,23 @@
                 18 [14 15 17 19]
                 19 [15 16 18]})
 (defn place
-  ;todo improve comment
-  "Call this with a map, the neighbors keys or a range and a {}
-  item-quantity is
-  locations is
-  output is"
-  [item-quantity locations output]
-  (if (empty? locations)
-    output
-    (let [location (rand-nth locations)
-          new-locations (remove #{location} locations)
-          item (rand-nth (keys item-quantity))
-          new-quantity (if (nil? item)
-                         0
-                         (dec (item-quantity item)))]
-      (if
-        (= 0 new-quantity)
-        (place (dissoc item-quantity item) new-locations (assoc output location item))
-        (place (assoc item-quantity item new-quantity) new-locations (assoc output location item))))))
+  "Takes game assets and assigns it a location on the board
+  kv is a map of the asset and the quantity of that asset."
+  ([kv locations]
+   (place kv locations {}))
+  ([kv locations output]
+   (if (empty? locations)
+     output
+     (let [location (rand-nth locations)
+           new-locations (remove #{location} locations)
+           item (rand-nth (keys kv))
+           new-quantity (if (nil? item)
+                          0
+                          (dec (kv item)))]
+       (if
+         (= 0 new-quantity)
+         (place (dissoc kv item) new-locations (assoc output location item))
+         (place (assoc kv item new-quantity) new-locations (assoc output location item)))))))
 
 (defn remove-neighbors-and-self
   "Give a location and a map of neighbors, removes all the keys that are adjacent to that location"
@@ -94,13 +93,12 @@
 (defn count-locations [locations]
   (range 1 (reduce + 1 (vals locations))))
 
-;todo switch to sorted maps?
 (defn setup-board []
   (let [p6-8s (place-6-8)
         locations-without-6-8s (keys (apply dissoc neighbors (keys p6-8s)))]
-    {:harbors   (into (sorted-map) (place harbors (count-locations harbors) {}))
-     :rolls     (into (sorted-map) (merge p6-8s (place rolls locations-without-6-8s {})))
-     :resources (into (sorted-map) (place resources (count-locations resources) {}))})) ;higher range b/c desert ;TODO change nil to desert
+    {:harbors   (into (sorted-map) (place harbors (count-locations harbors)))
+     :rolls     (into (sorted-map) (merge p6-8s (place rolls locations-without-6-8s)))
+     :resources (into (sorted-map) (place resources (count-locations resources)))})) ;higher range b/c desert ;TODO change nil to desert
 
 (comment
   (require '[flow-storm.api :as fs-api])
