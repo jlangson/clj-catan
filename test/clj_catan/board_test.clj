@@ -31,13 +31,13 @@
       (= board-m (count-reversed-keys board)))))
 
 (deftest remove-neighbors-and-self
-  (let [neigbhors {1  [2 3 :a]
+  (let [neighbors {1  [2 3 :a]
                    2  [4 5 6]
                    3  [7 8 9]
                    :a [5 6 7]
                    :b [12 13 11]}
         expected {:b [12 13 11]}]
-    (is (= expected (b/remove-neighbors-and-self 1 neigbhors)))))
+    (is (= expected (b/remove-neighbors-and-self 1 neighbors)))))
 
 (defn adjacent?
   "Determines if any of the locations are adjacent to each other
@@ -63,6 +63,7 @@
   (dotimes [i 100]
     (let [p68 (b/place-6-8)]
       (when (adjacent? (keys p68) b/neighbors)
+        (spit "/tmp/board-test.log" (format "failed adjacent at - (keys p68) ======> %s%n" (keys p68)) :append true)
         (println (format "failed adjacent at - (keys p68) ======> %s" (keys p68))))
       (is (not (adjacent? (keys p68) b/neighbors))))))
 
