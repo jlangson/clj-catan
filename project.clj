@@ -12,7 +12,7 @@
                  [com.github.jpmonettas/flow-storm-dbg "2.2.114"]
                  [org.postgresql/postgresql "42.3.6"]]
   :profiles {:dev {:dependencies [[org.clojure/test.check "1.1.1"]
-
                                   [ring/ring-mock "0.4.0"]
                                   [clj-test-containers "0.7.1"]]}}
+  :main clj-catan.app/-main
   :repl-options {:init-ns clj-catan.core})
