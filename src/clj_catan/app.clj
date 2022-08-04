@@ -8,10 +8,10 @@
             [clj-catan.board :as board]))
 
 
-(def make-board
+(defn make-board [_]
   {:status  200
    :headers {"Content-Type" "text/html"}
-   :body    (str (board/setup-board))})                     ;todo this is static. does not generate a new board when called twice
+   :body    (str (board/setup-board))})
 
 (def home-page
   {:status  200
