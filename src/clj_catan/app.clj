@@ -3,10 +3,7 @@
             [ring.middleware.reload :refer [wrap-reload]]
             [compojure.core :refer [defroutes GET POST]]
             [compojure.route :refer [not-found]]
-            [clojure.data.json :as json]
-            [clojure.string :as str]
             [clj-catan.board :as board]))
-
 
 (defn make-board [_]
   {:status  200
