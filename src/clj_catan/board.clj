@@ -1,6 +1,6 @@
 (ns clj-catan.board)
 
-; the keys in the hashmap are the type
+; the keys are the type
 ; the values in the hashmap are the quantity
 (def resources {"forest" 4
                 "brick"  3
@@ -8,10 +8,10 @@
                 "sheep"  4
                 "ore"    3})
 
-; the keys in the hashmap are the dice rolls that go on tiles.
+; the keys are the dice rolls that go on tiles.
 ; there is no 7 b/c 7 is not placed on any tiles
-; the values in the hashmap are the quantity of each dice roll that goes on the board
-; although 6 and 8 are valid rolls, they are special rolls that are handled by placew-6-8
+; the values are the quantity of each dice roll that goes on the board
+; although 6 and 8 are valid rolls, they are special rolls that are handled by place-6-8
 (def rolls {2  1
             3  2
             4  2
@@ -23,8 +23,8 @@
             11 2
             12 1})
 
-; the keys in the hashmap are the type
-; the values in the hashmap are the quantity
+; the keys are the type
+; the values are the quantity
 (def harbors {"brick"   1
               "generic" 4
               "sheep"   1
@@ -32,9 +32,9 @@
               "wheat"   1
               "wood"    1})
 
-; the keys in the hashmap is the location
-; the value in the hashmap are the adjacent tiles
-; see "catan overview.odg" for a picture of the tiles
+; the keys are the location
+; the value are the adjacent tiles
+; see "doc/catan overview.odg or doc/catan overview.jpeg" for a picture of the tiles
 (def neighbors {1 [2 4 5]
                 2 [1 3 5 6 ]
                 3 [2 6 7]
@@ -80,15 +80,16 @@
     (apply dissoc neighbors (conj adjacents location))))
 
 (defn place-6-8
-  "Seeds the board by placing the sixes and eights on non-adjacent tiles"
+  "Seeds the board by placing the 6's and 8's on non-adjacent tiles
+  Boards where a 6 or an 8 is adjacent to another 6 or 8 are illegal"
   ([]
-   (place-6-8 [6 6 8 8] neighbors {}))  ;todo make this explicit that neighbors is referencing a global
+   (place-6-8 [6 6 8 8] neighbors {}))
   ([six-eight-v neighbors  output]
    (if (empty? six-eight-v)
      output
      (let [location (rand-nth (keys neighbors))
            new-locations (remove-neighbors-and-self location neighbors)]
-       (place-6-8 (pop six-eight-v) new-locations (conj output {location (peek six-eight-v)})))))) ;should neigbhors be new-locations?
+       (place-6-8 (pop six-eight-v) new-locations (conj output {location (peek six-eight-v)}))))))
 
 (defn count-locations [locations]
   (range 1 (reduce + 1 (vals locations))))
@@ -98,7 +99,7 @@
         locations-without-6-8s (keys (apply dissoc neighbors (keys p6-8s)))]
     {:harbors   (into (sorted-map) (place harbors (count-locations harbors)))
      :rolls     (into (sorted-map) (merge p6-8s (place rolls locations-without-6-8s)))
-     :resources (into (sorted-map) (place resources (count-locations resources)))})) ;higher range b/c desert ;TODO change nil to desert
+     :resources (into (sorted-map) (place resources (count-locations resources)))})) ;higher range b/c desert
 
 (comment
   (require '[flow-storm.api :as fs-api])
