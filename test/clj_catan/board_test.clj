@@ -24,11 +24,12 @@
     frequencies))
 
 ; 100 runs causes stack overflow
+; generates a random map then sees if the output of b/place can be transformed back to the original input
 (defspec place-inverse-test 75
   (prop/for-all [board-v (gen/not-empty (gen/vector (gen/vector (gen/fmap inc gen/nat) 2 2)))]
-    (let [board-m (apply assoc {} (flatten board-v))
-          board (b/place board-m (b/count-locations board-m) {})]
-      (= board-m (count-reversed-keys board)))))
+    (let [board-input (apply assoc {} (flatten board-v))
+          board (b/place board-input (b/count-locations board-input) {})]
+      (= board-input (count-reversed-keys board)))))
 
 (deftest remove-neighbors-and-self
   (let [neighbors {1  [2 3 :a]
@@ -57,7 +58,7 @@
         neighbors-set (set (flatten (map neighbors-m locations-v)))]
     (seq (set/intersection loc-set neighbors-set))))
 
-; call b/place-6-8 100 times
+; call b/place-6-8 100 times since this generates a random output
 ; make sure none of the tiles are adjacent
 (deftest place-6-8-test
   (dotimes [i 100]
