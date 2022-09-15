@@ -7,3 +7,7 @@ Generates a legal and random board for Setlers of Catan. This is useful because 
 - [x] Randomly generate legal board.
 - [ ] Display board graphically.
 - [ ] Allow boards to be rated and stored in a database.
+
+# Rules
+
+https://www.catan.com/sites/default/files/2021-06/catan_base_rules_2020_200707.pdf
