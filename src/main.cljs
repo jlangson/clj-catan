@@ -1,15 +1,19 @@
 (ns main
   (:require [reagent.core :as r]
-            [reagent.dom :as rdom]))
+            [reagent.dom :as rdom]
+            [front-end.board :as board]
+            ))
 
+(defn make-board-button []
+  [:div
+   [:button "Generate Board"]])
 
 (defn app []
   [:div
-   [:p "I am a component"]
-   [:p.someclass
-    "I have " [:strong "bold"]
-    [:span {:style {:color "red"}} " and red "] "text."]])
-
+   [:h1 "Your random board"]
+   [:br]
+   [:p (str (board/setup-board))]
+   (make-board-button)])
 
 (defn mount! []
   (rdom/render [app]
@@ -20,8 +24,3 @@
 
 (defn reload! []
   (mount!))
-
-;(defn ^:export start! []
-;  (rdom/render [simple-component] (js/document.getElementById "app")))
-
-;(defn reload! [])
