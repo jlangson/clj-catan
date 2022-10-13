@@ -3,7 +3,7 @@
             [reagent.dom :as rdom]))
 
 
-(defn simple-component []
+(defn app []
   [:div
    [:p "I am a component"]
    [:p.someclass
