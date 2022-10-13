@@ -1,0 +1,30 @@
+{
+  "name": "clj-catan",
+  "version": "1.0.0",
+  "description": "Generates a legal and random board for Setlers of Catan. This is useful because the tiles are thick cardboard and are not easily shuffled.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlangson/clj-catan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jlangson/clj-catan/issues"
+  },
+  "homepage": "https://github.com/jlangson/clj-catan#readme",
+  "devDependencies": {
+    "shadow-cljs": "^2.20.3"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
