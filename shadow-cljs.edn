@@ -15,5 +15,5 @@
  {:app {:output-dir "public/compiledjs/"
         :asset-path "compiledjs"
         :target :browser
-        :modules {:main {:init-fn main/main!}}
-        :devtools {:after-load main/reload!}}}}
+        :modules {:main {:init-fn app.main/main!}}
+        :devtools {:after-load app.main/reload!}}}}
