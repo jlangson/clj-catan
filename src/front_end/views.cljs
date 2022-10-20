@@ -6,8 +6,7 @@
              "brick" "brown"
              "wood" "green"})
 
-(defn grid []
-  [:h2 "this is a grid"])
+
 
 (comment
   [:canvas {:width  500
