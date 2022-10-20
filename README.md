@@ -2,6 +2,10 @@
 
 Generates a legal and random board for Setlers of Catan. This is useful because the tiles are thick cardboard and are not easily shuffled.
 
+# Note to viewers
+
+The `frontend` branch contains the most recent development. 
+
 # Features
 
 - [x] Randomly generate legal board.
