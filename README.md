@@ -2,6 +2,12 @@
 
 Generates a legal and random board for Setlers of Catan. This is useful because the tiles are thick cardboard and are not easily shuffled.
 
+# How to run
+
+For front end `npx shadow-cljs watch app`
+
+For server `lein run <port>`
+
 # Features
 
 - [x] Randomly generate legal board.
