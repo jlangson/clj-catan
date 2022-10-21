@@ -2,10 +2,10 @@
 
 ; the keys are the type
 ; the values in the hashmap are the quantity
-(def resources {"forest" 4
+(def resources {"lumber" 4
                 "brick"  3
-                "wheat"  4
-                "sheep"  4
+                "grain"  4
+                "wool"  4
                 "ore"    3})
 
 ; the keys are the dice rolls that go on tiles.
@@ -27,10 +27,10 @@
 ; the values are the quantity
 (def harbors {"brick"   1
               "generic" 4
-              "sheep"   1
+              "wool"   1
               "ore"     1
-              "wheat"   1
-              "wood"    1})
+              "grain"   1
+              "lumber"    1})
 
 ; the keys are the location
 ; the value are the adjacent tiles
