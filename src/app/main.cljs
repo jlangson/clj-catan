@@ -43,7 +43,11 @@
        [:div (str @board)]]
       [:button.border.bg-indigo-500.border-indigo-500.text-white.rounded-md.px-4.py-2.m-2.hover:bg-indigo-600
        {:on-click #(reset! board (b/setup-board))}
-       "Make a new board!"]]]))
+       "Make a new board!"]]
+     [:br]
+     [:div.border.border-pink-300.my-5
+      [:p "map->grid"]
+      [views/map->grid @board]]]))
 
 (defn mount! []
   (rdom/render [app]
