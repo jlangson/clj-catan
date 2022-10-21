@@ -9,8 +9,8 @@
 (defn grid-proto []
   [:div.border.border-purple-400
    [:h2.text-2xl.my-2 "board grid prototype"]
-   [:div.grid.grid-cols-5.space-x-1.space-y-1
-    [:div.text-white.text-center.p-2.ml-1.mt-1.bg-green-700 "wood 1"] ;without the extra ml-1 and mt-1 the first element is slightly off compared to rest of grid
+   [:div.grid.grid-cols-5.gap-1
+    [:div.text-white.text-center.p-2.bg-green-700 "wood 1"]
     [:div.text-white.text-center.p-2.bg-gray-700 "ore 2"]
     [:div.text-white.text-center.p-2.bg-green-700  "wood 3"]
     [:div.text-white.text-center.p-2.bg-purple-800 "sheep 4"]
