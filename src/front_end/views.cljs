@@ -1,11 +1,33 @@
 (ns front-end.views)
 
-(def colors {"ore" "black"
-             "sheep" "blue"                                 ;blue so it is not confused with wood. todo choose better colors
-             "wheat" "yellow"
-             "brick" "brown"
-             "wood" "green"})
+(def color-classes
+            {"ore"   "bg-gray-700"
+             "sheep" "bg-purple-800"
+             "wheat" "bg-yellow-500"
+             "brick" "bg-yellow-900"
+             "wood"  "bg-green-700"})
 
+(defn map->grid [m]
+  [:div.grid.grid-cols-5.gap-1
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]
+   [:div.text-white.text-center.p-2]])
 
 
 (comment
