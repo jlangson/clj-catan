@@ -6,17 +6,29 @@
 
 (def board (r/atom (b/setup-board)))
 
-(defn grid []
+(defn grid-proto []
   [:div.border.border-purple-400
-   [:h2.text-2xl.my-2 "this is a board grid"]
-   [:div
-    [:div "wood 1"]
-    [:div "ore 2"]
-    [:div "forest 3"]]
-   [:div
-    [:div "sheep 4"]
-    [:div "wheat 5"]
-    [:div "brick 6"]]])
+   [:h2.text-2xl.my-2 "board grid prototype"]
+   [:div.grid.grid-cols-5.space-x-1.space-y-1
+    [:div.text-white.text-center.p-2.bg-green-700 "wood 1"]
+    [:div.text-white.text-center.p-2.bg-gray-700 "ore 2"]
+    [:div.text-white.text-center.p-2.bg-green-700  "wood 3"]
+    [:div.text-white.text-center.p-2.bg-purple-800 "sheep 4"]
+    [:div.text-white.text-center.p-2.bg-yellow-500 "wheat 5"]
+    [:div.text-white.text-center.p-2.bg-yellow-900 "brick 6"]
+    [:div.text-white.text-center.p-2.bg-pink-700 "desert 7"]
+    [:div.text-white.text-center.p-2.bg-yellow-900 "brick 8"]
+    [:div.text-white.text-center.p-2.bg-gray-700 "ore 9"]
+    [:div.text-white.text-center.p-2.bg-green-700 "wood 10"]
+    [:div.text-white.text-center.p-2.bg-purple-800 "sheep 11"]
+    [:div.text-white.text-center.p-2.bg-yellow-500 "wheat 12"]
+    [:div.text-white.text-center.p-2.bg-yellow-900 "brick 13"]
+    [:div.text-white.text-center.p-2.bg-green-700 "wood 14"]
+    [:div.text-white.text-center.p-2.bg-gray-700 "ore 15"]
+    [:div.text-white.text-center.p-2.bg-yellow-500 "wheat 16"]
+    [:div.text-white.text-center.p-2.bg-purple-800 "sheep 17"]
+    [:div.text-white.text-center.p-2.bg-yellow-500 "wheat 18"]
+    [:div.text-white.text-center.p-2.bg-yellow-900 "brick 19"]]])
 
 (defn app []
   (let [state (r/atom true)]
@@ -25,7 +37,7 @@
       "Your random board"]
      [:div.m-12
       [:br]
-      [grid]
+      [grid-proto]
       [:div.border.border-yellow-300.my-5
        [:p "Board data hashmap:"]
        [:div (str @board)]]
