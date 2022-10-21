@@ -33,21 +33,16 @@
 (defn app []
   (let [state (r/atom true)]
     [:div
-     [:h1.text-6xl.m-9 {:on-click #(js/alert "you clicked h1") }
-      "Your random board"]
+     [:h1.text-6xl.m-9 "Your random board"]
      [:div.m-12
       [:br]
-      [grid-proto]
+      [views/map->grid @board]
       [:div.border.border-yellow-300.my-5
        [:p "Board data hashmap:"]
        [:div (str @board)]]
       [:button.border.bg-indigo-500.border-indigo-500.text-white.rounded-md.px-4.py-2.m-2.hover:bg-indigo-600
        {:on-click #(reset! board (b/setup-board))}
-       "Make a new board!"]]
-     [:br]
-     [:div.border.border-pink-300.my-5
-      [:p "map->grid"]
-      [views/map->grid @board]]]))
+       "Make a new board!"]]]))
 
 (defn mount! []
   (rdom/render [app]

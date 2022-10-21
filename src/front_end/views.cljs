@@ -33,47 +33,21 @@
 
 
 
-(defn map->grid [m]
-  (let [get-tile-values (fn [m n] (str (get-in m [:resources n]) " roll=" (get-in m [:rolls n])))
-        get-tile-css (fn [m n] (color-classes (str (get-in m [:resources n]))))]
-    (def get-tile-values get-tile-values)                   ;for repl. todo remove from prod
-    (def get-tile-css get-tile-css)
-    [:div.grid.grid-cols-5.gap-1
-     [:div.text-white.text-center.p-2
-      {:class (get-tile-css m 1)}
-      (get-tile-values m 1)]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]
-     [:div.text-white.text-center.p-2]]))
 
-(defn map->grid2 [m]
-  (doall
-    (for [i (as-> m $
-              (get $ :rolls)
-              (count $)
-              (range 1 (inc $)))
-          :let [get-tile-values (fn [m n] (str (get-in m [:resources n]) " roll=" (get-in m [:rolls n])))
-                get-tile-css (fn [m n] (color-classes (str (get-in m [:resources n]))))]]
-      [:div.text-white.text-center.p-2
-       {:class (get-tile-css m i)}
-       (get-tile-values m i)]
-      ))
-  )
+;todo add desert
+(defn map->grid [m]
+  [:div.grid.grid-cols-5.gap-1
+   (doall
+     (for [i (as-> m $
+               (get $ :rolls)
+               (count $)
+               (inc $)
+               (range 1 $))
+           :let [get-tile-values (fn [m n] (str (get-in m [:resources n]) " roll=" (get-in m [:rolls n])))
+                 get-tile-css (fn [m n] (color-classes (str (get-in m [:resources n]))))]]
+       [:div.text-white.text-center.p-2
+        {:class (get-tile-css m i)}
+        (get-tile-values m i)]))])
 
 
 (comment
